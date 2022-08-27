@@ -3,46 +3,13 @@
     "runner": "terminal",
     "tasks": [
         {
-            "label": "c++ build",
-            "type": "shell",
-            "command": "make",
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
             "label": "Commit",
             "type": "shell",
-            "command": "git add .; git commit -m vscode;git push origin main;",
+            "command": "git add .; git commit -m vscode;git push origin master;",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
-        },
-        {
-            "label": "excute",
-            "type": "shell",
-            "command": "LD_LIBRARY_PATH=/usr/local/lib;LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./library/;export LD_LIBRARY_PATH;${workspaceFolder}/bin/main",
-            "problemMatcher": [],
-            "group": "build"
-        },
-        {
-            "type": "shell",
-            "label": "g++ build active file",
-            "command": "/usr/bin/g++",
-            "args": [
-                "-g",
-                "${file}",
-                "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
-            ],
-            "options": {
-                "cwd": "/usr/bin"
             }
         }
     ]
