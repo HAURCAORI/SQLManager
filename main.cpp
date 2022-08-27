@@ -41,11 +41,8 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     //w.Print();
-    //w.add();
+    w.add();
 
-    Table::FormatTable ft{"id","name","value"};
-    ft.addRow({"a","bc","abd"});
-    ft.print();
 
 /*
     try {

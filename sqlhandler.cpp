@@ -1,5 +1,6 @@
 #include "sqlhandler.h"
 #include <iostream>
+#include "tableformat.h"
 
 SQLHandler::SQLHandler()
 {
@@ -66,14 +67,16 @@ void SQLHandler::printTable(std::string table, std::initializer_list<std::string
         query.append(table);
 
         std::unique_ptr<sql::ResultSet> res(stmnt->executeQuery(query));
+        Table::FormatTable ft{fields};
 
         while(res->next()) {
+            std::vector<std::string> vec;
             for(auto s : fields) {
-                std::cout << res->getString(s) << " ";
+                vec.emplace_back(std::string(res->getString(s).c_str()));
             }
-            std::cout << std::endl;
+            ft.addRow(vec);
         }
-
+        ft.print();
     } catch (sql::SQLException& e) {
         std::cerr << "Error printing table : " << e.what()<< std::endl;
     }
