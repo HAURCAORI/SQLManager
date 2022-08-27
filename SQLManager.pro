@@ -25,10 +25,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    sqlhandler.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    sqlhandler.h \
+    tableformat.h
 
 FORMS += \
         mainwindow.ui
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/library/mariadb/release/ -Wl,-R$$PWD/library/mariadb/release/ -lmariadbcpp
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/library/mariadb/debug/ -Wl,-R$$PWD/library/mariadb/debug/ -lmariadbcpp
+else:unix:!macx: LIBS += -L$$PWD/library/mariadb/ -Wl,-R$$PWD/library/mariadb/ -lmariadbcpp
+
+INCLUDEPATH += $$PWD/include
+DEPENDPATH += $$PWD/include
