@@ -21,7 +21,7 @@ public:
     void add();
 
 signals:
-    void Print();
+    void testSignal();
 
 private:
     Ui::MainWindow *ui;

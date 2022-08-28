@@ -20,40 +20,50 @@ class SQLHandler : public QThread
 public:
     SQLHandler();
     ~SQLHandler();
-    void init(std::string url, std::string user, std::string password);
+
     void run();
-    void printTable(std::string table, std::initializer_list<std::string> fields);
+    void stop() noexcept;
+    void clear() noexcept;
 
-public slots:
-    bool printData();
+    void connect(std::string url, std::string user, std::string password);
+    void disconnect() noexcept;
 
-private:
-    //Threading
+    bool connected();
+
+
+
+
+
     template <class F, class... Args>
     std::future<typename std::result_of<F(Args...)>::type> EnqueueJob(F&& f, Args&&... args);
 
+    void printTable(std::string table, std::vector<std::string> fields);
+public slots:
+    void testSlot();
+private:
+    //Declaration of Function
+    void _connect(std::string url, std::string user, std::string password);
+    void _printTable(std::string table, std::vector<std::string> fields);
+
+    //Threading 관련 변수
     std::queue<std::function<void()>> jobs_;
     std::condition_variable cv_job_q_;
     std::mutex m_job_q_;
-    bool stop_all;
+    bool stop_all = false;
 
     //MariaDB
-
-
     sql::Driver* driver;
-    std::unique_ptr<sql::Connection> conn;
-    std::shared_ptr<sql::Statement> stmnt;
+    std::unique_ptr<sql::Connection> conn = nullptr;
+    std::shared_ptr<sql::Statement> stmnt = nullptr;
 
+    //Global
+    bool isconnected = false;
 
 };
 
 
 template <class F, class... Args>
 std::future<typename std::result_of<F(Args...)>::type> SQLHandler::EnqueueJob(F&& f, Args&&... args) {
-    if (stop_all) {
-        throw std::runtime_error("ThreadPool 사용 중지됨");
-    }
-
     using return_type = typename std::result_of<F(Args...)>::type;
     auto job = std::make_shared<std::packaged_task<return_type()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
     std::future<return_type> job_result_future = job->get_future();
