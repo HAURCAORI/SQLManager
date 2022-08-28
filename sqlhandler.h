@@ -13,6 +13,7 @@
 
 #include "mariadb/conncpp.hpp"
 
+
 class SQLHandler : public QThread
 {
     Q_OBJECT
@@ -37,7 +38,20 @@ public:
     template <class F, class... Args>
     std::future<typename std::result_of<F(Args...)>::type> EnqueueJob(F&& f, Args&&... args);
 
+
     void printTable(std::string table, std::vector<std::string> fields);
+
+    //DML
+    bool Insert();
+    bool Delete();
+    bool Update();
+    bool Select();
+
+    //DDL
+    bool Create();
+    bool Drop();
+    bool Altar();
+
 public slots:
     void testSlot();
 private:

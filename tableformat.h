@@ -6,6 +6,7 @@
 
 namespace Table {
 
+
 struct Field {
     std::string str;
     size_t width;
