@@ -6,6 +6,7 @@
 
 #include <qthreadpool.h>
 #include "tableformat.h"
+#include "datatable.h"
 
 void printContacts(std::shared_ptr<sql::Statement> &stmnt)
 {

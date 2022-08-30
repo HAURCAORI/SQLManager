@@ -58,6 +58,7 @@ private:
     //Declaration of Function
     void _connect(std::string url, std::string user, std::string password);
     void _printTable(std::string table, std::vector<std::string> fields);
+    void _insert();
 
     //Threading 관련 변수
     std::queue<std::function<void()>> jobs_;

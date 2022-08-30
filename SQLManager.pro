@@ -31,7 +31,8 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     sqlhandler.h \
-    tableformat.h
+    tableformat.h \
+    datatable.h
 
 FORMS += \
         mainwindow.ui

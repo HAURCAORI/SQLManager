@@ -150,5 +150,16 @@ void SQLHandler::_printTable(std::string table, std::vector<std::string> fields)
     }
 }
 
+void SQLHandler::_insert()
+{
+    std::shared_ptr<sql::PreparedStatement> pstmnt(
+                conn->prepareStatement(
+                   "INSERT INTO test.contacts(first_name, last_name, email) VALUES (?, ?, ?)"
+                )
+             );
+
+
+}
+
 
 
